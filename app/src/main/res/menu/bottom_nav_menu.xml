@@ -11,5 +11,11 @@
         android:icon="@android:drawable/ic_menu_month"
         android:title="Monthly" />
 
+    <item
+        android:id="@+id/nav_dev"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Dev Tools"
+        android:visible="false" />
+
 
 </menu>

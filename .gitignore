@@ -16,6 +16,3 @@ local.properties
 
 # Firebase
 app/google-services.json
-
-# Local users file
-users.json

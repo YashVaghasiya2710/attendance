@@ -2,8 +2,6 @@ package com.office.attendance;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,11 +33,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
     private ProgressBar progressBar;
     private static final String GITHUB_JSON_URL = "https://raw.githubusercontent.com/YashVaghasiya2710/attendance/main/users.json";
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mDatabase = FirebaseDatabase.getInstance("https://attendance-b55ba-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
 
         // Check if already logged in via prefs
         if (getSharedPreferences("prefs", MODE_PRIVATE).contains("user_name")) {
@@ -42,14 +49,14 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        etUsername = findViewById(R.id.et_email); // Reusing existing ID from layout
+        etUsername = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
-        progressBar = findViewById(R.id.progressBar); // Make sure to add this to XML if missing
+        progressBar = findViewById(R.id.progressBar);
 
-        findViewById(R.id.btn_login).setOnClickListener(v -> handleGitHubAuth());
+        findViewById(R.id.btn_login).setOnClickListener(v -> handleLogin());
     }
 
-    private void handleGitHubAuth() {
+    private void handleLogin() {
         String username = etUsername.getText().toString().trim().toLowerCase();
         String password = etPassword.getText().toString().trim();
 
@@ -58,19 +65,27 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
+        // Hardcoded Developer Check
+        if (username.equals("yash") && password.equals("Vagha@2710")) {
+            saveSession(username, true);
+            return;
+        }
 
+        if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
+        
+        checkGitHubAndFirebase(username, password);
+    }
+
+    private void checkGitHubAndFirebase(String inputUser, String inputPass) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(GITHUB_JSON_URL)
-                .build();
+        Request request = new Request.Builder().url(GITHUB_JSON_URL).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 runOnUiThread(() -> {
                     if (progressBar != null) progressBar.setVisibility(View.GONE);
-                    Toast.makeText(LoginActivity.this, "Network error. Check connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                 });
             }
 
@@ -79,49 +94,68 @@ public class LoginActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     runOnUiThread(() -> {
                         if (progressBar != null) progressBar.setVisibility(View.GONE);
-                        Toast.makeText(LoginActivity.this, "Error fetching user list", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Auth source error", Toast.LENGTH_SHORT).show();
                     });
                     return;
                 }
 
-                String jsonData = response.body().string();
-                runOnUiThread(() -> validateUser(jsonData, username, password));
+                String json = response.body().string();
+                runOnUiThread(() -> validateAgainstFirebase(json, inputUser, inputPass));
             }
         });
     }
 
-    private void validateUser(String json, String inputUser, String inputPass) {
-        if (progressBar != null) progressBar.setVisibility(View.GONE);
+    private void validateAgainstFirebase(String json, String inputUser, String inputPass) {
         try {
             JSONArray users = new JSONArray(json);
-            boolean found = false;
-
+            boolean isAuthorized = false;
             for (int i = 0; i < users.length(); i++) {
-                JSONObject user = users.getJSONObject(i);
-                if (user.getString("username").equalsIgnoreCase(inputUser) &&
-                    user.getString("password").equals(inputPass)) {
-                    
-                    // Success! Save username to prefs (this acts as Login)
-                    getSharedPreferences("prefs", MODE_PRIVATE)
-                            .edit()
-                            .putString("user_name", inputUser)
-                            .apply();
-                    
-                    found = true;
+                if (users.getJSONObject(i).getString("username").equalsIgnoreCase(inputUser)) {
+                    isAuthorized = true;
                     break;
                 }
             }
 
-            if (found) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, "Invalid Username or Password", Toast.LENGTH_SHORT).show();
+            if (!isAuthorized) {
+                if (progressBar != null) progressBar.setVisibility(View.GONE);
+                Toast.makeText(this, "User not in authorized list", Toast.LENGTH_SHORT).show();
+                return;
             }
 
+            mDatabase.child("passwords").child(inputUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (progressBar != null) progressBar.setVisibility(View.GONE);
+                    String correctPass = snapshot.getValue(String.class);
+                    
+                    if (correctPass != null && correctPass.equals(inputPass)) {
+                        saveSession(inputUser, false);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (progressBar != null) progressBar.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this, "Database error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         } catch (Exception e) {
-            Log.e("Auth", "JSON Parse error", e);
-            Toast.makeText(this, "Auth system error", Toast.LENGTH_SHORT).show();
+            if (progressBar != null) progressBar.setVisibility(View.GONE);
+            Toast.makeText(this, "Auth logic error", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void saveSession(String username, boolean isDev) {
+        getSharedPreferences("prefs", MODE_PRIVATE)
+                .edit()
+                .putString("user_name", username)
+                .putBoolean("is_dev", isDev)
+                .apply();
+        
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 }
