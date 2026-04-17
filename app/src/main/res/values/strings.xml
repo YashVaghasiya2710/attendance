@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Office Attendance</string>
+    <string name="nav_today">Today</string>
+    <string name="nav_monthly">Monthly</string>
+    <string name="nav_people">People</string>
+</resources>

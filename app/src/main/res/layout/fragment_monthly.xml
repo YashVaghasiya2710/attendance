@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/bg"
+    android:padding="16dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ATTENDANCE\nTRACKER"
+            android:textColor="@color/accent"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="-8sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="// track hours · measure deficit"
+            android:textColor="@color/muted"
+            android:textSize="12sp"
+            android:fontFamily="monospace" />
+    </LinearLayout>
+
+    <!-- Stats Grid -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="3"
+        android:layout_marginBottom="24dp">
+
+        <!-- Total Hours -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:padding="16dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TOTAL HOURS"
+                android:textColor="@color/muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_total_hours_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h 0m"
+                android:textColor="@color/accent"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_total_days_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 days logged"
+                android:textColor="@color/muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- Target Hours -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:padding="16dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TARGET HOURS"
+                android:textColor="@color/muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_target_hours_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h 0m"
+                android:textColor="@color/text"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="4dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@"
+                    android:textColor="@color/muted"
+                    android:textSize="10sp"
+                    android:fontFamily="monospace" />
+                <EditText
+                    android:id="@+id/et_target_input"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="9"
+                    android:textColor="@color/accent"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace"
+                    android:padding="0dp"
+                    android:minHeight="0dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="h/day"
+                    android:textColor="@color/muted"
+                    android:textSize="10sp"
+                    android:fontFamily="monospace" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Deficit / Surplus (Full Width) -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_columnWeight="2"
+            android:layout_margin="4dp"
+            android:padding="16dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DEFICIT / SURPLUS"
+                android:textColor="@color/muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_deficit_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h 0m"
+                android:textColor="@color/success"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_deficit_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="on track"
+                android:textColor="@color/muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+            <ProgressBar
+                android:id="@+id/progress_deficit"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="8dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/progress_custom" />
+        </LinearLayout>
+
+        <!-- Avg / Day -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:padding="16dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AVG / DAY"
+                android:textColor="@color/muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_avg_hours_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h 0m"
+                android:textColor="@color/accent"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- Best Day -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:padding="16dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BEST DAY"
+                android:textColor="@color/muted"
+                android:textSize="10sp"
+                android:fontFamily="monospace" />
+            <TextView
+                android:id="@+id/tv_best_day_stat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="@color/success"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+    </GridLayout>
+
+    <!-- Recycler Header Navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+        <ImageButton
+            android:id="@+id/btn_prev_month"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_media_previous"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Previous Month"
+            app:tint="@color/muted" />
+        <TextView
+            android:id="@+id/tv_month_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="April 2026"
+            android:textColor="@color/accent"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="monospace" />
+        <ImageButton
+            android:id="@+id/btn_next_month"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_media_next"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Next Month"
+            app:tint="@color/muted" />
+    </LinearLayout>
+
+    <!-- Table Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingHorizontal="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:text="DATE"
+            android:textColor="@color/muted"
+            android:textSize="10sp"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="IN"
+            android:textColor="@color/muted"
+            android:textSize="10sp"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="OUT"
+            android:textColor="@color/muted"
+            android:textSize="10sp"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="WORKED"
+            android:textColor="@color/muted"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="+/-"
+            android:textColor="@color/muted"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/surface"
+        android:layout_marginBottom="8dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_monthly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No records for this month"
+            android:textColor="@color/muted"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

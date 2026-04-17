@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_card"
+    android:padding="12dp">
+
+    <!-- Employee Header -->
+    <LinearLayout
+        android:id="@+id/card_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tv_avatar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.SmallComponent"
+            android:text="JD"
+            android:textSize="12sp"
+            android:layout_marginEnd="12dp"
+            app:strokeWidth="1dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Employee Name"
+                android:textColor="@color/accent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 days logged"
+                android:textColor="@color/muted"
+                android:textSize="11sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_expand_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="▼"
+            android:textColor="@color/muted"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+
+    <!-- Table Headings -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:text="DATE"
+            android:textColor="@color/muted"
+            android:textSize="9sp"
+            android:fontFamily="monospace" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="IN"
+            android:textColor="@color/muted"
+            android:textSize="9sp"
+            android:fontFamily="monospace" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="OUT"
+            android:textColor="@color/muted"
+            android:textSize="9sp"
+            android:fontFamily="monospace" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="HOURS"
+            android:textColor="@color/muted"
+            android:textSize="9sp"
+            android:fontFamily="monospace" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:text="+/-"
+            android:textColor="@color/muted"
+            android:textSize="9sp"
+            android:fontFamily="monospace"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <!-- Records Container (Dynamic) -->
+    <LinearLayout
+        android:id="@+id/ll_day_records"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>

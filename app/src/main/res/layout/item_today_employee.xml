@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_card"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Employee Name"
+                android:textColor="@color/accent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/et_checkin"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill_subtle"
+                    android:hint="--:--"
+                    android:textColorHint="@color/muted"
+                    android:textColor="@color/text"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:inputType="time"
+                    android:gravity="center"
+                    android:paddingVertical="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  →  "
+                    android:textColor="@color/muted"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/et_checkout"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill_subtle"
+                    android:hint="--:--"
+                    android:textColorHint="@color/muted"
+                    android:textColor="@color/text"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:inputType="time"
+                    android:gravity="center"
+                    android:paddingVertical="4dp"/>
+
+                <ImageButton
+                    android:id="@+id/btn_save_time"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@android:drawable/ic_menu_save"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:tint="@color/accent"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IN"
+            android:textColor="#000000"
+            app:backgroundTint="@color/accent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="8dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_hours_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0h 0m"
+            android:textColor="@color/accent"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:background="@drawable/bg_pill_subtle"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COMPLETED"
+            android:textColor="@color/muted"
+            android:textSize="10sp"
+            android:fontFamily="monospace" />
+    </LinearLayout>
+
+</LinearLayout>

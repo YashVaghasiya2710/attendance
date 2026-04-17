@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tv_day_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.2"
+        android:text="01 Apr"
+        android:textColor="@color/text"
+        android:textSize="12sp"
+        android:fontFamily="monospace" />
+
+    <TextView
+        android:id="@+id/tv_day_in"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:text="11:05"
+        android:textColor="@color/text"
+        android:textSize="12sp"
+        android:fontFamily="monospace" />
+
+    <TextView
+        android:id="@+id/tv_day_out"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:text="20:03"
+        android:textColor="@color/text"
+        android:textSize="12sp"
+        android:fontFamily="monospace" />
+
+    <TextView
+        android:id="@+id/tv_day_hours"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="8h 58m"
+        android:textColor="@color/accent"
+        android:textSize="11sp"
+        android:fontFamily="monospace"
+        android:paddingHorizontal="4dp"
+        android:background="@drawable/bg_pill_subtle"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_day_diff"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:text="-0h 02m"
+        android:textColor="@color/danger"
+        android:textSize="11sp"
+        android:fontFamily="monospace"
+        android:gravity="end" />
+
+</LinearLayout>
