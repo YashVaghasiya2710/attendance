@@ -108,16 +108,15 @@ public class DevFragment extends Fragment {
         @NonNull
         @Override
         public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_dev, parent, false);
             return new UserViewHolder(v);
         }
 
         @Override
         public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
             String username = users.get(position);
-            TextView tv = holder.itemView.findViewById(android.R.id.text1);
+            TextView tv = holder.itemView.findViewById(R.id.tv_username);
             tv.setText(username.toUpperCase());
-            tv.setTextColor(getResources().getColor(R.color.text));
             holder.itemView.setOnClickListener(v -> showPasswordDialog(username));
         }
 

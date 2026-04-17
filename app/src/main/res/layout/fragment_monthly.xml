@@ -248,7 +248,7 @@
             android:id="@+id/btn_prev_month"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@android:drawable/ic_media_previous"
+            android:src="@drawable/ic_media_previous"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Previous Month"
             app:tint="@color/muted" />
@@ -267,7 +267,7 @@
             android:id="@+id/btn_next_month"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@android:drawable/ic_media_next"
+            android:src="@drawable/ic_media_next"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Next Month"
             app:tint="@color/muted" />

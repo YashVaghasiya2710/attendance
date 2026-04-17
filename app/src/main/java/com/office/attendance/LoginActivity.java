@@ -27,6 +27,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -91,16 +92,20 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (!response.isSuccessful()) {
-                    runOnUiThread(() -> {
-                        if (progressBar != null) progressBar.setVisibility(View.GONE);
-                        Toast.makeText(LoginActivity.this, "Auth source error", Toast.LENGTH_SHORT).show();
-                    });
-                    return;
-                }
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) {
+                        runOnUiThread(() -> {
+                            if (progressBar != null) progressBar.setVisibility(View.GONE);
+                            Toast.makeText(LoginActivity.this, "Auth Source Error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        });
+                        return;
+                    }
 
-                String json = response.body().string();
-                runOnUiThread(() -> validateAgainstFirebase(json, inputUser, inputPass));
+                    if (responseBody != null) {
+                        String json = responseBody.string();
+                        runOnUiThread(() -> validateAgainstFirebase(json, inputUser, inputPass));
+                    }
+                }
             }
         });
     }

@@ -42,7 +42,7 @@
             android:textColor="@color/muted"
             android:textSize="11sp"
             android:fontFamily="monospace"
-            android:text="Extract dates and times from the provided chat. Return ONLY a JSON array like: [{&quot;date&quot;: &quot;YYYY-MM-DD&quot;, &quot;in&quot;: &quot;hh:mm AM/PM&quot;, &quot;out&quot;: &quot;hh:mm AM/PM&quot;}]. Use empty string if OUT is missing." />
+            android:text="Extract dates and times from the provided chat for current and past month only. Return ONLY a JSON array like: [{&quot;date&quot;: &quot;YYYY-MM-DD&quot;, &quot;in&quot;: &quot;hh:mm AM/PM&quot;, &quot;out&quot;: &quot;hh:mm AM/PM&quot;}]. Use empty string if OUT is missing." />
         <ImageButton
             android:id="@+id/btn_copy_prompt"
             android:layout_width="40dp"
